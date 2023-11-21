@@ -17,7 +17,7 @@ app.get('/', async (req, res) => {
     }
 });
 
-app.post('/cadastrar-usuario', async (req, res) => {
+app.post('/cadastrarUsuario', async (req, res) => {
     try {
         const { nome, email, data_nascimento } = req.body;
         const novoUsuario = await knex('usuarios').insert({
@@ -32,13 +32,14 @@ app.post('/cadastrar-usuario', async (req, res) => {
     }
 });
 
-app.put('/atualizar-usuario', async (req, res) => {
+app.put('/atualizarUsuario', async (req, res) => {
     const { nome, email } = req.body;
     const { id } = req.params;
     try {
         const usuarioAtualizado = await knex('usuarios').update({ nome, email }).where({ id }).returning('*');
         console.log(usuarioAtualizado);
         return res.json(usuarioAtualizado)
+
     } catch (error) {
         console.error('Erro:', error);
         return res.status(500).json({ mensagem: "Erro Interno do Servidor" });
