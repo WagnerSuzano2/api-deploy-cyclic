@@ -9,6 +9,7 @@ app.use(express.json());
 app.get('/', async (req, res) => {
     try {
         const listarUsuarios = await knex('usuarios').debug();
+        console.log(listarUsuarios)
         return res.json(listarUsuarios);
     } catch (error) {
         return res.status(500).json({ mensagem: "Erro Interno do Servidor" });
