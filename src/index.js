@@ -14,6 +14,7 @@ app.get('/', async (req, res) => {
         return res.status(500).json({ mensagem: "Erro Interno do Servidor" });
     }
 });
+
 const port = process.env.PORT || 3005
 
 app.listen(port, () => {
