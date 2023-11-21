@@ -12,7 +12,7 @@ app.get('/', async (req, res) => {
         const listarUsuarios = await knex('usuarios');
         return res.json(listarUsuarios);
     } catch (error) {
-        console.error('Motivo do erro:', error);
+        console.error('erro ao listar usuarios:', error);
         return res.status(500).json({ mensagem: "Erro Interno do Servidor" });
     }
 });
@@ -41,10 +41,20 @@ app.put('/atualizarUsuario/:id', async (req, res) => {
         return res.json(usuarioAtualizado)
 
     } catch (error) {
-        console.error('Erro:', error);
+        console.error('Erro ao atualizar usuario:', error);
         return res.status(500).json({ mensagem: "Erro Interno do Servidor" });
     }
 });
+app.delete('/exluirUsuario/:id', async (req, res) => {
+    const { id } = req.params
+    try {
+        const usuarioExcluido = await knex('usuarios').del().where({ id }).returning('*').debug();
+        return res.json(usuarioExcluido);
+    } catch (error) {
+        console.error('Erro ao excluir usuário:', error);
+        return res.status(500).json({ mensagem: "Erro Interno do Servidor" });
+    }
+})
 
 const port = process.env.PORT || 3005
 
