@@ -20,17 +20,24 @@ app.get('/', async (req, res) => {
 app.post('/cadastrar-usuario', async (req, res) => {
     try {
         const { nome, email, data_nascimento } = req.body;
-
-        // Valide os dados conforme necessário
-
-        // Insira os dados no banco de dados usando o Knex
         const novoUsuario = await knex('usuarios').insert({
             nome,
             email,
-            data_nascimento, // Certifique-se de que o nome da coluna está correto
+            data_nascimento,
         }).returning('*');
-
         return res.status(201).json({ usuario: novoUsuario[0] });
+    } catch (error) {
+        console.error('Erro ao cadastrar usuário:', error);
+        return res.status(500).json({ mensagem: "Erro Interno do Servidor" });
+    }
+});
+
+app.put('/atualizar-usuario', async (req, res) => {
+    const { nome, email } = req.body;
+    const { id } = req.params;
+    try {
+        const usuarioAtualizado = await knex('usuarios').update({ nome, email }).where({ id }).returning('*').debug();
+        return res.json(usuarioAtualizado)
     } catch (error) {
         console.error('Erro ao cadastrar usuário:', error);
         return res.status(500).json({ mensagem: "Erro Interno do Servidor" });
