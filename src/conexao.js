@@ -2,12 +2,11 @@ require('dotenv').config()
 const knex = require('knex')({
     client: 'pg',
     connection: {
-        host: 'isabelle.db.elephantsql.com',
-        port: 5432,
-        user: 'asvocent',
-        password: `${process.env.SENHA}`,
-        database: 'asvocent'
-    },
-    ssl: { rejectUnauthorized: false }
+        host: process.env.DB_HOST,
+        port: process.env.DB_PORT,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASS,
+        database: process.env.DB_NAME,
+    }
 });
 module.exports = knex
