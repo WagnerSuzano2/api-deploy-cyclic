@@ -19,7 +19,7 @@ app.get('/', async (req, res) => {
 
 app.post('/cadastrar-usuario', async (req, res) => {
     try {
-        const { nome, email, dataNascimento } = req.body;
+        const { nome, email, data_nascimento } = req.body;
 
         // Valide os dados conforme necessário
 
@@ -27,7 +27,7 @@ app.post('/cadastrar-usuario', async (req, res) => {
         const novoUsuario = await knex('usuarios').insert({
             nome,
             email,
-            data_nascimento: dataNascimento, // Certifique-se de que o nome da coluna está correto
+            data_nascimento, // Certifique-se de que o nome da coluna está correto
         }).returning('*');
 
         return res.status(201).json({ usuario: novoUsuario[0] });
