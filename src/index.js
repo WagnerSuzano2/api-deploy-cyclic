@@ -9,7 +9,7 @@ app.use(express.json());
 
 app.get('/', async (req, res) => {
     try {
-        const listarUsuarios = await knex('usuarios').debug();
+        const listarUsuarios = await knex('usuarios');
         return res.json(listarUsuarios);
     } catch (error) {
         console.error('Motivo do erro:', error);
@@ -36,7 +36,8 @@ app.put('/atualizar-usuario', async (req, res) => {
     const { nome, email } = req.body;
     const { id } = req.params;
     try {
-        const usuarioAtualizado = await knex('usuarios').update({ nome, email }).where({ id }).returning('*').debug();
+        const usuarioAtualizado = await knex('usuarios').update({ nome, email }).where({ id }).returning('*');
+        console.log(usuarioAtualizado);
         return res.json(usuarioAtualizado)
     } catch (error) {
         console.error('Erro:', error);
