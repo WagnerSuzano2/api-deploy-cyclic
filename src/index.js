@@ -32,7 +32,7 @@ app.post('/cadastrarUsuario', async (req, res) => {
     }
 });
 
-app.put('/atualizarUsuario', async (req, res) => {
+app.put('/atualizarUsuario/:id', async (req, res) => {
     const { nome, email } = req.body;
     const { id } = req.params;
     try {
