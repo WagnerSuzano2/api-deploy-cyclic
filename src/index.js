@@ -48,7 +48,7 @@ app.put('/atualizarUsuario/:id', async (req, res) => {
 app.delete('/exluirUsuario/:id', async (req, res) => {
     const { id } = req.params
     try {
-        const usuarioExcluido = await knex('usuarios').del().where({ id }).returning('*').debug();
+        const usuarioExcluido = await knex('usuarios').del().where({ id }).returning('*');
         return res.json(usuarioExcluido);
     } catch (error) {
         console.error('Erro ao excluir usuário:', error);
