@@ -12,7 +12,7 @@ app.get('/', async (req, res) => {
         console.log(listarUsuarios)
         return res.json(listarUsuarios);
     } catch (error) {
-        console.error('Erro:', error);
+        console.error('Motivo do erro:', error);
         return res.status(500).json({ mensagem: "Erro Interno do Servidor" });
     }
 });
