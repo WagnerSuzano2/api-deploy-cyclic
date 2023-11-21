@@ -6,13 +6,33 @@ const express = require('express');
 const app = express();
 
 app.use(express.json());
+
 app.get('/', async (req, res) => {
     try {
         const listarUsuarios = await knex('usuarios').debug();
-        console.log(listarUsuarios)
         return res.json(listarUsuarios);
     } catch (error) {
         console.error('Motivo do erro:', error);
+        return res.status(500).json({ mensagem: "Erro Interno do Servidor" });
+    }
+});
+
+app.post('/cadastrar-usuario', async (req, res) => {
+    try {
+        const { nome, email, dataNascimento } = req.body;
+
+        // Valide os dados conforme necessário
+
+        // Insira os dados no banco de dados usando o Knex
+        const novoUsuario = await knex('usuarios').insert({
+            nome,
+            email,
+            data_nascimento: dataNascimento, // Certifique-se de que o nome da coluna está correto
+        }).returning('*');
+
+        return res.status(201).json({ usuario: novoUsuario[0] });
+    } catch (error) {
+        console.error('Erro ao cadastrar usuário:', error);
         return res.status(500).json({ mensagem: "Erro Interno do Servidor" });
     }
 });
