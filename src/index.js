@@ -39,7 +39,7 @@ app.put('/atualizar-usuario', async (req, res) => {
         const usuarioAtualizado = await knex('usuarios').update({ nome, email }).where({ id }).returning('*').debug();
         return res.json(usuarioAtualizado)
     } catch (error) {
-        console.error('Erro ao cadastrar usuário:', error);
+        console.error('Erro:', error);
         return res.status(500).json({ mensagem: "Erro Interno do Servidor" });
     }
 });
