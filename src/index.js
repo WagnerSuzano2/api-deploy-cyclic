@@ -3,8 +3,9 @@ const knex = require('./conexao');
 //e usado esta maneira caso o arquivo .env não esteja na raiz do projeto
 //require('dotenv').config({path:'.src/.env'})
 const express = require('express');
+const cors = require('cors');
 const app = express();
-
+app.use(cors());
 app.use(express.json());
 
 app.get('/', async (req, res) => {
